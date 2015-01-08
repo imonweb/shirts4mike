@@ -1,4 +1,24 @@
 <?php 
+// ob_start()
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$name = $_POST["name"];
+	$email = $_POST["email"];
+	$message = $_POST["message"];
+	$email_body = "";
+	$email_body = $email_body . "Name: " . $name . "<br>";
+	$email_body = $email_body . "Email: " . $email . "<br>";
+	$email_body = $email_body . "Message: " . $message;
+	 
+header("Location: contact.php?status=thanks");
+exit;
+}
+	// TODO: Send Email
+
+
+// ob_flush(); 
+?>
+<?php 
 $pageTitle = "Contact Mike";
 $section = "contact";
 include('inc/header.php'); ?>
@@ -9,9 +29,13 @@ include('inc/header.php'); ?>
 		
 	<h1>Contact</h1>
 
+	<?php if (isset($_GET["status"]) AND $_GET["status"] == "thanks") { ?>
+		<p>Thanks for the email! I&rsquo;ll be in touch shortly.</p>
+	<?php } else { ?>
+
 	<p>I&rsquo;d love to hear from you! Complete the form to send me an email.</p>
 
-	<form method="post" action="contact-process.php">
+	<form method="post" action="contact.php">
 
 		<table>
 		<tr>
@@ -52,7 +76,8 @@ include('inc/header.php'); ?>
 
 	</form>
 
+	<?php } ?>
+
 		</div> <!-- wrapper -->
 	</div> <!-- section page -->
-
 <?php include('inc/footer.php'); ?>
